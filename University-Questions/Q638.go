@@ -22,7 +22,7 @@ func main() {
 		fmt.Println("0")
 		return
 	}
-  // use pascal's triangle to calculate the series
+	// use pascal's triangle to calculate the series
 	for i := 2; i <= n; i++ {
 		temp := new(big.Int).SetInt64(1)
 		for  j := 1; j < i; j++{
@@ -33,7 +33,7 @@ func main() {
 
 		triangleRow[i] = new(big.Int).SetInt64(1)
 		multiply := new(big.Int).SetInt64(1)
-    // this could be ompimized a bit by going halfway and multiplying raising the answer to power of 2. (and multiply the middle element if necessary)
+		// this could be ompimized a bit by going halfway and multiplying raising the answer to power of 2. (and multiply the middle element if necessary)
 		for j := 0; j <= i; j++ {
 			multiply.Mul(multiply, triangleRow[j])
 		}
