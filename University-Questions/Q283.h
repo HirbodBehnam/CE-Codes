@@ -22,10 +22,10 @@ int run(){
     int inner_thickness = (a - b) / 2;
 
     for (int i = 0; i < a; i++){
-        if(inner_thickness - i > 0 || a - i <= inner_thickness){ // print without the empty space
+        if(inner_thickness - i > 0 || a - i <= inner_thickness){ // print the think part without the empty space
             for(int j = 0; j < a; j++)
                 printf("* ");
-        } else{
+        } else{ // some parts in middle is empty
             for(int j = 0; j < inner_thickness; j++)
                 printf("* ");
             for(int j = 0; j < b; j++)

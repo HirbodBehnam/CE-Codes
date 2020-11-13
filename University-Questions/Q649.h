@@ -38,8 +38,7 @@ int run(){
     int a, b;
     char* result = malloc(sizeof(char) * 1000); // 1000 chars is probably ok
     memset(result, 0, sizeof(char) * 1000);
-    scanf("%d", &a);
-    scanf("%d", &b);
+    scanf("%d %d", &a, &b);
     a++; // do not check a
     for(; a < b; a++){
         if(is_prime(a) == 0){

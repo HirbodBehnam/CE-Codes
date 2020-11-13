@@ -24,7 +24,7 @@ void run(){
             k = ((k - 1) / 30) % 10;
         else // first digit
             k = ((k - 2) / 3) % 10;
-    }else{ // four digit
+    }else{ // four digit; At this point got the pattern
         k -= 2890;
         if(k % 4 == 0)
             k = (k / 4000) + 1;

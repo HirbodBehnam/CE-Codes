@@ -22,8 +22,13 @@ int main(){
         scanf("%d", &a);
         occurrences[a]++;
     }
-    // now see how many of them have the difference of 1
-    // note that i use MAX_A not MAX_A + 1. Because I don't want to check the last element
+    /**
+     * Count the number of edges in graph. How?
+     * Think that we have three vertexes that have the number of 1 on them. Also we have two vertexes have have number 2 on them
+     * We should connect each of these vertexes together; This can be done with 3 * 2 = 6 edges.
+     * So we just multiply a number in array with it's next element and add that number of edges to edges_count
+     * note that i use MAX_A not MAX_A + 1. Because I don't want to check the last element
+     */
     for(int i = 1; i < MAX_A; i++)
         edges_count += occurrences[i] * occurrences[i + 1];
     printf("%llu", edges_count);

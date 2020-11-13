@@ -33,7 +33,7 @@ int run(){
     scanf("%s", ip_string);
     int ip_len = strlen(ip_string);
     /*
-     * Try to add dot. I don't know if there is any better way to do this
+     * Try to add 4 dot. I don't know if there is any better way to do this
      * The second condition in for loops checks that the string length is always less than 4.
      * This is done to prevent integer overflows on big numbers and also increasing speed of program
      */

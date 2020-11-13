@@ -11,6 +11,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**
+ * Checks if a number is palindrome is a specific base
+ * @param number The number to check
+ * @param to_base The base to convert to
+ * @return True if the number is palindrome otherwise false
+ */
 bool check_base_convert(long number, int to_base){
     char letters[] = "0123456789ABCDEF";
     char result[64];
@@ -35,7 +41,7 @@ int main(){
     int base, n;
     scanf("%d %d",&n, &base);
     int counter = 0; // count the number of "khafan" numbers
-    // no need to calculate 2 and 3 in seive
+    // no need to calculate 2 and 3 in sieve
     // so check them now
     if(check_base_convert(2,base)){
         counter++;

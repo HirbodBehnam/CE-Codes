@@ -38,12 +38,12 @@ int run(){
     for(int i = 0; i < n; i++){
         short distance;
         scanf("%hd", &distance);
-        // shitty way to check if this has been an duplicate
+        // shitty way to check if distance has been a duplicate
         char good = YES; // if this variable is YES it means that the number is not an duplicate
         for(int j = 0; j < counter; j++) // instead of i there is counter (because of duplicate variables)
             if(distances[j] == distance)
             {
-                good = NO;
+                good = NO; // the variable is not unique
                 break;
             }
         if(good == YES) { // only add the number if it is not duplicate

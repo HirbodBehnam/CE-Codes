@@ -9,7 +9,7 @@
 #include <string.h>
 
 /**
- * Checks if a number is palindrome is a specefic base
+ * Checks if a number is palindrome is a specific base
  * @param number The number to check
  * @param to_base The base to convert to
  * @return

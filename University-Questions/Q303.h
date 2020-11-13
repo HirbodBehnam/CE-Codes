@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 /**
- *
+ * Prints Fibonacci numbers in reverse from m to 1
  * @param n The next number in series
  * @param m The first number in series
  */
@@ -17,9 +17,9 @@ void ShowFibNth(long int n, long int m){
     ShowFibNth(m, n - m);
 }
 
-int run(){
+int main(){
     long int a, b;
-    scanf("%ld", &a);
-    scanf("%ld", &b);
+    scanf("%ld %ld", &a, &b);
     ShowFibNth(b, a);
+    return 0;
 }
