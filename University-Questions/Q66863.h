@@ -5,6 +5,7 @@
 
 #define PRIME_TOTAL 5 * 1000 * 1000
 
+#include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -23,16 +24,14 @@ bool check_base_convert(long number, int to_base){
     result[counter] = letters[number]; // the last digit
     // check if reversed string is same as normal one
     unsigned long len = strlen(result);
-    bool res = true;
     for(counter = 0; counter < len / 2; counter++)
-        if(result[counter] != result[len - counter - 1]){
-            res = false;
-            break;
-        }
-    return res;
+        if(result[counter] != result[len - counter - 1])
+            return false;
+
+    return true;
 }
 
-int run(){
+int main(){
     int base, n;
     scanf("%d %d",&n, &base);
     int counter = 0; // count the number of "khafan" numbers
@@ -56,12 +55,7 @@ int run(){
     char* candidates = malloc(PRIME_TOTAL * sizeof(char));
     memset(candidates, 0, PRIME_TOTAL * sizeof(char));
     int length = PRIME_TOTAL + 1;
-    /*
-     * If start skipping is set to true, the program will explicitly start skipping the elimination
-     * The reason that this variables is required is that if there is not such variable and the program executes continue
-     * when i * i > length. This statement fails when i * i overflows the int thus i * i results in a negative value and statement turns true.
-     */
-    bool start_skipping = false;
+    const int To = (int)sqrt((double)length);
     int i;
     for (i = 5; ; i += 4) // only check 6k +- 1
     {
@@ -76,16 +70,15 @@ int run(){
                     return 0;
                 }
             }
-            // end the loop (does not happen)
-            if (!start_skipping && i * i <= length){
+            // check if eliminating candidates is needed
+            if (i <= To) {
                 // eliminate other non-primes
                 j = 2;
-                do{
+                do {
                     candidates[j * i] = 1;
                     j++;
                 } while (j * i < length);
-            }else
-                start_skipping = true;
+            }
 
         }
         i += 2;
@@ -99,16 +92,15 @@ int run(){
                     return 0;
                 }
             }
-            // end the loop (does not happen)
-            if (!start_skipping && i * i <= length){
+            // check if eliminating candidates is needed
+            if (i <= To) {
                 // eliminate other non-primes
                 j = 2;
-                do{
+                do {
                     candidates[j * i] = 1;
                     j++;
                 } while (j * i < length);
-            }else
-                start_skipping = true;
+            }
         }
     }
 }
