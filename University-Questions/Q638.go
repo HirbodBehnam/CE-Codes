@@ -33,7 +33,7 @@ func main() {
 
 		triangleRow[i] = new(big.Int).SetInt64(1)
 		multiply := new(big.Int).SetInt64(1)
-		// this could be ompimized a bit by going halfway and multiplying raising the answer to power of 2. (and multiply the middle element if necessary)
+		// this could be optimized a bit by going halfway and multiplying raising the answer to power of 2. (and multiply the middle element if necessary)
 		for j := 0; j <= i; j++ {
 			multiply.Mul(multiply, triangleRow[j])
 		}
