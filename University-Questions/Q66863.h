@@ -58,8 +58,7 @@ int main(){
         }
     }
     // do sieve
-    char* candidates = malloc(PRIME_TOTAL * sizeof(char));
-    memset(candidates, 0, PRIME_TOTAL * sizeof(char));
+    char* candidates = calloc(sizeof(char), PRIME_TOTAL);
     int length = PRIME_TOTAL + 1;
     const int To = (int)sqrt((double)length);
     int i;

@@ -6,17 +6,17 @@
 #include <stdio.h>
 
 // This is not optimized. I might optimize it later
-int run(){
+int run() {
     int a, b;
     scanf("%d %d", &a, &b);
 
     int max = a > b ? a : b;
-    if(a == b){ // the numbers must not be same. If so, all of the numbers will fit in the answer
+    if (a == b) { // the numbers must not be same. If so, all of the numbers will fit in the answer
         return 0;
     }
 
-    for(int i = 2; i <= max; i++)
-        if(a % i == b % i)
+    for (int i = 2; i <= max; i++)
+        if (a % i == b % i)
             printf("%d ", i);
 
     return 0;
