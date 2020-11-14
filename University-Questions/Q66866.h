@@ -14,8 +14,7 @@ int main() {
     scanf("%d", &n);
     unsigned long long edges_count = 0;
     // create an array to store the occurrences of the numbers. The length of the array must be the max A + 1
-    int *occurrences = malloc((MAX_A + 1) * sizeof(int)); // no need to free this. We need it until the very end
-    memset(occurrences, 0, (MAX_A + 1) * sizeof(int));
+    int *occurrences = calloc(sizeof(int) ,(MAX_A + 1)); // no need to free this. We need it until the very end
     // read the input and calculate the occurrences
     for (; n > 0; n--) {
         int a;
