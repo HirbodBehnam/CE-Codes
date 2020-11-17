@@ -72,7 +72,7 @@ int main() {
             case 'b': // build
             {
                 int i = 5;
-                if(command[i+1] != ')') { // do not do anything if build is empty
+                if (command[i + 1] != ')') { // do not do anything if build is empty
                     while (command[i] != ')') {
                         i++;
                         // classic number parse algorithm

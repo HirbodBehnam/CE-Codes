@@ -11,15 +11,15 @@ int compare(const void *a, const void *b) {
 }
 
 // kinda cheating :D
-int main(){
-    int* array = malloc(500 * 1000 * sizeof(int));
+int main() {
+    int *array = malloc(500 * 1000 * sizeof(int));
     int counter = 0;
     int temp;
-    while (scanf("%d", &temp) != EOF){
+    while (scanf("%d", &temp) != EOF) {
         array[counter] = temp;
         counter++;
     }
     qsort(array, counter, sizeof(int), compare);
-    for(int i = 0; i< counter;i++)
+    for (int i = 0; i < counter; i++)
         printf("%d ", array[i]);
 }

@@ -12,10 +12,9 @@
  * @param begin
  * @param end
  */
-void reverse(int *arr, int start, int end){
+void reverse(int *arr, int start, int end) {
     int temp;
-    while (start < end)
-    {
+    while (start < end) {
         temp = arr[start];
         arr[start] = arr[end];
         arr[end] = temp;
@@ -25,22 +24,22 @@ void reverse(int *arr, int start, int end){
 }
 
 // Time limit fail
-int main(){
+int main() {
     int n, m;
     scanf("%d %d", &n, &m);
-    int* cassettes = malloc((n + 1) * sizeof(int));
+    int *cassettes = malloc((n + 1) * sizeof(int));
     // fill cassettes
-    for(int i = 1; i <= n; i++)
+    for (int i = 1; i <= n; i++)
         cassettes[i] = i;
     // get commands
-    for(; m > 0; m--){
+    for (; m > 0; m--) {
         char command[5];
         scanf("%s", command);
-        if(command[0] == 'N'){ // name
+        if (command[0] == 'N') { // name
             int index;
             scanf("%d", &index);
             printf("%d\n", cassettes[index]);
-        }else{ // REV
+        } else { // REV
             int begin, end;
             scanf("%d %d", &begin, &end);
             reverse(cassettes, begin, end);
