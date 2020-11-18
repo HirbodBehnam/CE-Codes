@@ -3,7 +3,7 @@
 
 #endif //QUERA_Q364_H
 
-#define MAX_DEPTH 100 + 1
+#define MAX_DEPTH 100
 
 #include <stdio.h>
 #include <string.h>
@@ -37,9 +37,6 @@ int run() {
          *
          * What myself did in problem 67 was using graphs and dijkstra's algorithm to find the biggest path.
          * Code at https://gist.github.com/HirbodBehnam/2eade4ef6f15410d1186565f4719e0ec
-         *
-         * However, this code does not work with quera somehow :|
-         * But it works with both problems from project euler
          */
 
         for (int i = n - 1; i > 0; i--) // note that i must not be 0
@@ -47,7 +44,7 @@ int run() {
                 tree[i - 1][j] += max(tree[i][j], tree[i][j + 1]);
 
         // the first element is the max sum
-        printf("%d", tree[0][0]);
+        printf("%d\n", tree[0][0]);
     }
     return 0;
 }
