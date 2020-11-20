@@ -6,7 +6,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * I have completely explained the algorithm in legacy function
+ */
 int main() {
+    int n;
+    scanf("%d", &n);
+    unsigned long long input_sums, input_sums_sums, sum;
+    scanf("%llu", &input_sums);
+    sum = input_sums_sums = input_sums;
+    for (int i = 1; i < n; i++) {
+        int temp;
+        scanf("%d", &temp);
+        input_sums += temp;
+        sum += input_sums * (i + 1) - input_sums_sums;
+        input_sums_sums += input_sums;
+    }
+    printf("%llu\n", sum);
+    return 0;
+}
+
+int legacy() {
     int n;
     scanf("%d", &n);
     /**
@@ -61,6 +81,12 @@ int main() {
          * Why not use another sum array for this one?"
          *
          * So I came out with this algorithm which is O(n).
+         *
+         * Later I found that I have been using arrays for literally nothing :D
+         * I only and only need the last two elements in each iteration; So in new main function I changed
+         * arrays to just simple numbers.
+         *
+         * I sill want to keep this legacy code; Might come handy later...
          */
         sum += input_sums[i] * (i + 1) - input_sums_sums[i - 1];
     }
