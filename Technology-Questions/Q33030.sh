@@ -25,14 +25,15 @@ for d in "$2/"* ; do
 		CHILDREN+=("$child_pid")
 	fi
 	# now check working files
-	for dd in "$d/"fd/* ; do
-		working_file=$(readlink "$dd")
-		if [[ "$WORKING_FILES_STR" =~ " ${working_file} " ]]; then
-		  # For some reasons, the script fails on last three tests which there is no file involved
-			#WORKING_PID+=("$child_pid")
-			break
-		fi
-	done
+	if [[ "${#WORKING_FILES[@]}" != "0" ]]; then
+		for dd in "$d/"fd/* ; do
+			working_file=$(readlink "$dd")
+			if [[ "$WORKING_FILES_STR" =~ " ${working_file} " ]]; then  #TODO: Fix empty working files
+				WORKING_PID+=("$child_pid")
+				break
+			fi
+		done
+	fi
 done
 # Get user id and parernt user ID
 user_id=$(awk '/^Uid:/{print $2}' "$2/$1/status")
