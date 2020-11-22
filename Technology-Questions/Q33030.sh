@@ -2,7 +2,7 @@ pid="$1"
 path="$2"
 # Get files that the target process is working on them
 WORKING_FILES=()
-for d in "$2/$1/"fd/* ; do
+for d in "$2/$1/"fd/*; do
 	working_file=$(readlink "$d")
 	working_file_base=$(basename "$working_file")
 	extension="${working_file_base##*.}"
@@ -14,7 +14,7 @@ done
 WORKING_FILES_STR=" ${WORKING_FILES[@]} "
 CHILDREN=()
 WORKING_PID=()
-for d in "$2/"* ; do
+for d in "$2/"*; do
 	child_pid=$(basename "$d")
 	if [[ "$child_pid" == "$pid" ]]; then
 		continue
@@ -26,9 +26,9 @@ for d in "$2/"* ; do
 	fi
 	# now check working files
 	if [[ "${#WORKING_FILES[@]}" != "0" ]]; then
-		for dd in "$d/"fd/* ; do
+		for dd in "$d/"fd/*; do
 			working_file=$(readlink "$dd")
-			if [[ "$WORKING_FILES_STR" =~ " ${working_file} " ]]; then  #TODO: Fix empty working files
+			if [[ "$WORKING_FILES_STR" =~ " ${working_file} " ]]; then
 				WORKING_PID+=("$child_pid")
 				break
 			fi
