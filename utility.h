@@ -126,3 +126,24 @@ unsigned long long perfect_sqrt(unsigned long long x) {
     }
     return 0; // not prefect square root
 }
+
+/**
+ * Integer power
+ * https://stackoverflow.com/a/101613/4213397
+ * @param base The base of power
+ * @param exp The exponent
+ * @return The result
+ */
+long long ipow(long long base, int exp) {
+    long long result = 1;
+    for (;;) {
+        if (exp & 1)
+            result *= base;
+        exp >>= 1;
+        if (!exp)
+            break;
+        base *= base;
+    }
+
+    return result;
+}

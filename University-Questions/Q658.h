@@ -30,7 +30,7 @@ int main() {
             best = sum;
         for (int j = i + 1; j < n; j++) {
             sum += stonks[j];
-            if (sum < 0) { // also do not check next numbers if the sum is less than 0
+            if (sum <= 0) { // also do not check next numbers if the sum is less than 0
                 i = j - 1; // -1 to counter the i++
                 break;
             }

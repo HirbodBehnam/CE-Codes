@@ -35,15 +35,6 @@ char *base_convert(long number, int to_base) {
 int main() {
     int number, to_base;
     scanf("%d %d", &number, &to_base);
-    /**
-     * So apparently there is a problem in the question.
-     * Test number 2 gives a base more than 10. (and 32)
-     * The answer to that test is no. So I just hardcoded the answer if the base is more than 10
-     */
-    if (to_base > 10) {
-        printf("No");
-        return 0;
-    }
     char *converted_base = base_convert(number, to_base);
     // calculate sum
     int sum1 = 0, sum2 = 0;
