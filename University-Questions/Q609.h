@@ -3,10 +3,8 @@
 
 #endif //QUERA_Q609_H
 
-#define LEFT 0 // moving left in matrix
-#define DOWN 1 // moving down in matrix
-#define RIGHT 2 // moving right in matrix
-#define UP 3 // moving up in matrix
+enum movement{left, down, right, up};
+
 /**
  * After adding an element to sum, we assign this value to it to mark it as visited
  * This helps to "shrink" the matrix to know when to turn
@@ -56,41 +54,41 @@ int main() {
 
     int counter = 0, i = 0, j = 0;
     // in status we declare with direction we are moving
-    char status = LEFT;
+    enum movement status = left;
     while (counter != n * n) {
         sum += matrix[i][j];
         if (sum == 0 || perfect_sqrt(sum) != 0) // add one to points if the sum is 0 (because perfect_sqrt returns zero when the number is not perfect square) or the number is not perfect square
             points++;
         matrix[i][j] = VISITED; // mark the tile as visited
         switch (status) {
-            case LEFT:
+            case left:
                 // reached the edge or reached a visited tile
                 if ((j + 1) == n || matrix[i][j + 1] == VISITED) {
-                    status = DOWN; // status++;
+                    status = down; // status++;
                     i++; // move to downer tile
                 } else { // otherwise just move one left
                     j++;
                 }
                 break;
-            case DOWN:
+            case down:
                 if ((i + 1) == n || matrix[i + 1][j] == VISITED) {
-                    status = RIGHT; // status++;
+                    status = right; // status++;
                     j--; // move to right tile
                 } else { // otherwise just move one down
                     i++;
                 }
                 break;
-            case RIGHT:
+            case right:
                 if (j == 0 || matrix[i][j - 1] == VISITED) {
-                    status = UP; // status++;
+                    status = up; // status++;
                     i--; // move to upper tile
                 } else { // otherwise just move one right
                     j--;
                 }
                 break;
-            case UP:
+            case up:
                 if (i == 0 || matrix[i - 1][j] == VISITED) {
-                    status = LEFT; // status = 0;
+                    status = left; // status = 0;
                     j++; // move to left tile
                 } else { // otherwise just move one up
                     i--;
