@@ -20,13 +20,13 @@ struct locales_distance {
 
 // compares two locales_distance structs
 int compare(const void *a, const void *b) {
-    short d = (*(struct locales_distance *) a).distance - (*(struct locales_distance *) b).distance;
+    short d = ((struct locales_distance *) a)->distance - ((struct locales_distance *) b)->distance;
     if (d == 0) // if distances of both locals is same, the one that has the smaller a must come first
-        return (*(struct locales_distance *) a).a - (*(struct locales_distance *) b).a;
+        return ((struct locales_distance *) a)->a - ((struct locales_distance *) b)->a;
     return d; // if distances are not equal just return d
 }
 
-int run() {
+int main() {
     int n;
     scanf("%d", &n);
     // I think it's ok to store both of these variables in stack. Max size of them are 180 + 24030 bytes which is not a lot
