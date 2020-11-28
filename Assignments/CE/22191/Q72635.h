@@ -9,9 +9,8 @@
 #include <stdio.h>
 
 // I used same thing as Q66865 from university questions
-// But it didn't work :|
 
-int run() {
+int main() {
     int t;
     scanf("%d", &t);
     for(; t > 0; t--) {
@@ -34,12 +33,12 @@ int run() {
             }
             // if the elevated point is not reached the numbers can also be equal
             if (reached_elevated_point == 0) {
-                if ((hill_status == UP_HILL && last_elevation >= elevation) ||
-                    (hill_status == DOWN_HILL && elevation >= last_elevation))
+                if ((hill_status == UP_HILL && last_elevation > elevation) ||
+                    (hill_status == DOWN_HILL && elevation > last_elevation))
                     reached_elevated_point = 1;
             } else { // numbers must not be equal. Also the elevation status must be switched here
-                if ((hill_status == UP_HILL && elevation >= last_elevation) ||
-                    (hill_status == DOWN_HILL && last_elevation >= elevation)) {
+                if ((hill_status == UP_HILL && elevation > last_elevation) ||
+                    (hill_status == DOWN_HILL && last_elevation > elevation)) {
                     good = 0;
                 }
             }
