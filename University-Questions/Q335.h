@@ -10,7 +10,7 @@
 int run(){
     /**
      * So this array somehow plays the role of stack type in higher level languages
-     * The strategy in this question is to
+     * The strategy in this question is to use a stack like object to keep track of sums of sub-sets
      */
     unsigned long long sums[MAX], temp_number;
     int index = -1;
@@ -26,7 +26,7 @@ int run(){
             sums[index] += temp_number;
             // same as popping last element from stack
             printf("%llu\n", sums[index]);
-            sums[index - 1] += sums[index];
+            sums[index - 1] += sums[index]; // add the sum to element before (to the set before)
             index--;
             temp_number = 0;
         }else if(c == ',') { // done reading the number, add it into stack
