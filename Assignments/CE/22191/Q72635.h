@@ -36,7 +36,7 @@ int main() {
                 if ((hill_status == UP_HILL && last_elevation > elevation) ||
                     (hill_status == DOWN_HILL && elevation > last_elevation))
                     reached_elevated_point = 1;
-            } else { // numbers must not be equal. Also the elevation status must be switched here
+            } else { // we have reached the elevation point. Numbers can be equal too
                 if ((hill_status == UP_HILL && elevation > last_elevation) ||
                     (hill_status == DOWN_HILL && last_elevation > elevation)) {
                     good = 0;
