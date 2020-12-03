@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-int run(){
+int main(){
     long long a, b, c, d; // why long long? because multiplying ints might cause integer overflow
     scanf("%lld %lld %lld %lld", &a, &b, &c, &d);
     long long max = b * d > a * c ? b * d : a * c; // this is normal checking
