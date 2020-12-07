@@ -1,12 +1,7 @@
-#ifndef QUERA_6_H
-#define QUERA_6_H
-
-#endif //QUERA_6_H
-
-#include <stdarg.h>
 #include "grader.h"
+#include <stdarg.h>
 
-extern int s;
+#define calc(n1,n2,opt) n1 opt n2
 
 /**
  * We can't use math sqrt? No problem! Lets use this.
@@ -107,15 +102,10 @@ long long findDivisorSum(int a, ...) {
             long long sum = sum_prime_factors(va_arg(list, int));
             if(min < sum)
                 min = sum;
-            printf("%d", va_arg(list, int));
         }
         va_end(list);
         return min;
     }
-}
-
-int calc(){
-
 }
 
 long long run(char type, int num1, int num2, int num3, int num4) {
