@@ -5,45 +5,43 @@
 
 #include <stdio.h>
 
-int run() {
+int main() {
     int n;
     scanf("%d", &n);
+    getchar(); // skip the \n after the number
     for (; n > 0; n--) {
-        int fateme_odd = 0, fateme_even = 0, mohamad_odd = 0, mohamad_even = 0, digits_total = 0;
-        unsigned long long input;
-        scanf("%llu", &input);
-        if(input == 0)
-        {
-            printf("2\n");
-            continue;
-        }
+        char fatemeh_have_odd = 0, mohamad_have_even = 0, digits_total = 0;
         // count the odd and even digits
-        {
-            char fateme_round = 1;
-            while (input != 0) {
-                int digit = input % 10;
-                if(fateme_round){
-                    if(digit % 2 == 0)
-                        fateme_even++;
-                    else
-                        fateme_odd++;
-                    fateme_round = 0;
-                }else{
-                    if(digit % 2 == 0)
-                        mohamad_even++;
-                    else
-                        mohamad_odd++;
-                    fateme_round = 1;
-                }
-                digits_total++;
-                input /= 10;
+        char c, fatemeh_round = 1;
+        // this counts the input from left to right
+        while ((c = getchar()) != '\n' && c != EOF) {
+            int digit = c - '0';
+            if (fatemeh_round) {
+                if (digit % 2 == 1)
+                    fatemeh_have_odd = 1; // fatemeh can win the round if number of digits is odd
+                fatemeh_round = 0;
+            } else {
+                if (digit % 2 == 0)
+                    mohamad_have_even = 1; // mohamad can win the round if number of digits is even
+                fatemeh_round = 1;
             }
+            digits_total++;
         }
-        if(digits_total % 2 == 1){
-            printf(fateme_odd > 0 ? "1\n" : "2\n");
-        }else{
-            printf(mohamad_even > 0 ? "2\n" : "1\n");
-        }
+        /**
+         * So what is the algorithm for this?
+         * If the count of digits is odd, it means that one of the digits from odd indexes (fatemeh numbers) will be remained at last
+         * This means that mohamad have no control over the game, because in all scenarios, mohamad have to eliminate all of his numbers
+         * So if fatemeh have at least one odd number it it's numbers (indexes) can win the game by leaving that number as the last number
+         */
+        if (digits_total % 2 == 1)
+            printf(fatemeh_have_odd > 0 ? "1\n" : "2\n");
+        else
+            printf(mohamad_have_even > 0 ? "2\n" : "1\n");
+        /**
+         * If the count of digits is even, it means that one of the digits from even indexes (mohamad numbers) will be remained at last
+         * This means that fatemeh have no control over the game, because in all scenarios, fatemeh have to eliminate all of his numbers
+         * So if mohamad have at least one even number it it's numbers (indexes) can win the game by leaving that number as the last number
+         */
     }
     return 0;
 }
