@@ -54,6 +54,7 @@ long long sum_factors(int a) {
 
 // It looks like that the preprocessor if works? I mean at least I'm not getting any compile errors
 #if s == 0
+
 /**
  * Gets the the max or min of sum of factors of these numbers
  * @param m 'M' to get the max 'm' to get the min
@@ -66,16 +67,16 @@ long long findDivisorSum(char m, int a, int b, int c) {
     long long res = sum_factors(a);
     long long sum = sum_factors(b);
     if (m == 'M') { // max
-        if(res < sum)
+        if (res < sum)
             res = sum;
         sum = sum_factors(c);
-        if(res < sum)
+        if (res < sum)
             res = sum;
     } else { // min
-        if(res > sum)
+        if (res > sum)
             res = sum;
         sum = sum_factors(c);
-        if(res > sum)
+        if (res > sum)
             res = sum;
     }
     return res;
