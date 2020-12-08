@@ -1,7 +1,9 @@
 #include "grader.h"
 #include <stdarg.h>
 
-#define calc(n1,n2,opt) n1 opt n2
+#define calc(n1,n2,opt) ((n1) opt (n2))
+
+//int s = 0;
 
 /**
  * We can't use math sqrt? No problem! Lets use this.
@@ -34,47 +36,19 @@ unsigned long long floor_sqrt(unsigned long long x) {
 }
 
 /**
- * Returns 0 if the number is prime. Returns it's first factor if not
- * @param number The number to check
- * @return 0 if the number is prime otherwise it's first factor
- */
-unsigned long long is_prime(unsigned long long x) {
-    if (x == 1)
-        return 1;
-    if (x == 2 || x == 3 || x == 5 || x == 7)
-        return 0;
-    if (x % 2 == 0)
-        return 2;
-    if (x % 3 == 0)
-        return 3;
-    const unsigned long long To = floor_sqrt(x);
-    for (unsigned long long i = 5; i <= To; i += 4) { // check 6k+-1
-        if (x % i == 0) // 6k - 1
-            return i;
-        i += 2;
-        if (x % i == 0) // 6k + 1
-            return i;
-    }
-    return 0;
-}
-
-/**
- * Counts number of prime factors
- * 14 = {1,2,7,14} = 9
+ * Sum of factors
+ * 14 = {1,2,7,14} = 14 + 7 + 2 + 1 = 24
  * @param a
  * @return
  */
-long long sum_prime_factors(int a) {
+long long sum_factors(int a) {
     int to = (int) floor_sqrt(a);
     long long sum = 0;
     for (int i = 1; i <= to; i++)
         if (a % i == 0) {
-            if (is_prime(i) == 0)
-                sum += i;
-            if (i * i != a) { // fix perfect square numbers
-                if (is_prime(a / i) == 0)
-                    sum += a / i;
-            }
+            sum += i;
+            if (i * i != a) // fix perfect square numbers
+                sum += a / i;
         }
 
     return sum;
@@ -88,24 +62,37 @@ long long sum_prime_factors(int a) {
  * @return
  */
 long long findDivisorSum(int a, ...) {
+    va_list list;
+    long long res;
     if (s == 0) {
         if (a == 'M') {
-
+            res = 0;
+            va_start(list, 3);
+            for (int j = 0; j < 3; j++) {
+                long long sum = sum_factors(va_arg(list, int));
+                if(res < sum)
+                    res = sum;
+            }
         } else {
-
+            res = 0x7FFFFFFFFFFFFFFF;
+            va_start(list, 3);
+            for (int j = 0; j < 3; j++) {
+                long long sum = sum_factors(va_arg(list, int));
+                if(res > sum)
+                    res = sum;
+            }
         }
     } else {
-        long long min = 0x7FFFFFFFFFFFFFFF;
-        va_list list;
+        res = 0x7FFFFFFFFFFFFFFF;
         va_start(list, a);
         for (int j = 0; j < a; j++) {
-            long long sum = sum_prime_factors(va_arg(list, int));
-            if(min < sum)
-                min = sum;
+            long long sum = sum_factors(va_arg(list, int));
+            if(res > sum)
+                res = sum;
         }
-        va_end(list);
-        return min;
     }
+    va_end(list);
+    return res;
 }
 
 long long run(char type, int num1, int num2, int num3, int num4) {
