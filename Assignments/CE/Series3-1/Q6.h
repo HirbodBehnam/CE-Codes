@@ -1,9 +1,7 @@
 #include "grader.h"
 #include <stdarg.h>
 
-#define calc(n1,n2,opt) ((n1) opt (n2))
-
-//int s = 0;
+#define calc(n1, n2, opt) ((n1) opt (n2))
 
 /**
  * We can't use math sqrt? No problem! Lets use this.
@@ -54,46 +52,57 @@ long long sum_factors(int a) {
     return sum;
 }
 
+// It looks like that the preprocessor if works? I mean at least I'm not getting any compile errors
+#if s == 0
+/**
+ * Gets the the max or min of sum of factors of these numbers
+ * @param m 'M' to get the max 'm' to get the min
+ * @param a First number
+ * @param b Second number
+ * @param c Third number
+ * @return
+ */
+long long findDivisorSum(char m, int a, int b, int c) {
+    long long res = sum_factors(a);
+    long long sum = sum_factors(b);
+    if (m == 'M') { // max
+        if(res < sum)
+            res = sum;
+        sum = sum_factors(c);
+        if(res < sum)
+            res = sum;
+    } else { // min
+        if(res > sum)
+            res = sum;
+        sum = sum_factors(c);
+        if(res > sum)
+            res = sum;
+    }
+    return res;
+}
+
+#else
 /**
  * Sources:
  * https://stackoverflow.com/a/10071238/4213397
- * @param a
- * @param ...
+ * @param a Number of numbers
+ * @param ... The numbers
  * @return
  */
 long long findDivisorSum(int a, ...) {
     va_list list;
-    long long res;
-    if (s == 0) {
-        if (a == 'M') {
-            res = 0;
-            va_start(list, 3);
-            for (int j = 0; j < 3; j++) {
-                long long sum = sum_factors(va_arg(list, int));
-                if(res < sum)
-                    res = sum;
-            }
-        } else {
-            res = 0x7FFFFFFFFFFFFFFF;
-            va_start(list, 3);
-            for (int j = 0; j < 3; j++) {
-                long long sum = sum_factors(va_arg(list, int));
-                if(res > sum)
-                    res = sum;
-            }
-        }
-    } else {
-        res = 0x7FFFFFFFFFFFFFFF;
-        va_start(list, a);
-        for (int j = 0; j < a; j++) {
-            long long sum = sum_factors(va_arg(list, int));
-            if(res > sum)
-                res = sum;
-        }
+    long long res = 0x7FFFFFFFFFFFFFFF;
+    va_start(list, a);
+    for (int j = 0; j < a; j++) {
+        long long sum = sum_factors(va_arg(list, int));
+        if (res > sum)
+            res = sum;
     }
     va_end(list);
     return res;
 }
+
+#endif
 
 long long run(char type, int num1, int num2, int num3, int num4) {
     return findDivisorSum(type, calc(num1, num2, +), calc(num1, num2, -), calc(num3, num4, *));
