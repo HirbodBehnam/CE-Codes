@@ -3,7 +3,6 @@
 
 #endif //QUERA_Q4_H
 
-#include <math.h>
 #include <stdio.h>
 
 /**

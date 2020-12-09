@@ -1,6 +1,9 @@
 #include "grader.h"
 #include <stdarg.h>
 
+/**
+ * A macro that also accepts the operator as argument
+ */
 #define calc(n1, n2, opt) ((n1) opt (n2))
 
 /**
