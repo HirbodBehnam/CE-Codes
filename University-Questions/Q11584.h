@@ -17,7 +17,7 @@ int main() {
     // pre-calculate; generate the lookup table
     unsigned long long answers[n + 1];
     for (unsigned int i = 1; i <= n; i++) {
-        long long sum = 0;
+        unsigned long long sum = 0;
         for (unsigned int j = 1; j <= i; j++)
             sum += input[j] ^ (i - j);
         answers[i] = sum;
@@ -26,7 +26,7 @@ int main() {
     for (; q > 0; q--) {
         int question;
         scanf("%d", &question);
-        printf("%lld\n", answers[question]);
+        printf("%llu\n", answers[question]);
     }
     return 0;
 }
