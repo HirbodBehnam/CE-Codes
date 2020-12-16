@@ -1,7 +1,7 @@
-#ifndef QUERA_Q2_H
+#ifndef QUERA_Q2_1_H
 #define QUERA_Q2_H
 
-#endif //QUERA_Q2_H
+#endif //QUERA_Q2_1_H
 
 #include <stdio.h>
 
