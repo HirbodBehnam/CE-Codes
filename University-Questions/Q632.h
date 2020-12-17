@@ -20,11 +20,14 @@
  * My answer is the accepted answer - 5; If my answer was smaller than correct answer, it meant that this function was missing some chars
  * So I decided to add chars one to one and check if my result changes (by abusing runtime exception)
  * I realised that missing chars were "-.("
+ * After 15 min of submitting the code which I fixed it (commit aafb3901022ca0f831c15aa0cb023af7c980f160)
+ * I realised that somehow, ANYTHING, except chars are punctuation :|
+ * FUCK ME
  * @param c The character to check
  * @return True if it is punctuation character
  */
 bool punctuation_char(char c) {
-    return c == ' ' || c == '!' || c == '-' || c == '.' || c == '(';
+    return !(c >= 'a' && c <= 'z');
 }
 
 int main() {
