@@ -5,6 +5,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <math.h>
 
 /**
  * |a|
@@ -22,7 +23,7 @@ double dabs(double x){
  * @return
  */
 double f1(double x, double y){
-    return dabs(y - (x - (double )((long long)x)));
+    return dabs(y - (x - floor(x)));
 }
 
 /**
@@ -60,20 +61,10 @@ int main(){
         if(f3(x, y) > 0.2)
             ok[2] = false;
     }
-    int counter = 0;
-    if(ok[0]) {
-        counter++;
-        printf("1");
-    }
-    if(ok[1]) {
-        counter++;
-        printf("2");
-    }
-    if(ok[2]){
-        counter++;
-        printf("3");
-    }
-    if(counter == 0)
+    for(int i = 0; i < 3; i ++)
+        if(ok[i])
+            printf("%d\n", i + 1);
+    if(!ok[0] && !ok[1] && !ok[2])
         printf("No ones");
     return 0;
 }
