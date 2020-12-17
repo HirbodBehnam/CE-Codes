@@ -11,8 +11,20 @@
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * Checks if a char is a punctuation that can separate words or not
+ * This question is fucking bullshit because the question doesn't say what are the punctuation chars
+ * Apparently one thing I forgot at first is '('; Well I'm still not sure if all of these are needed or not
+ * How did I found out what are these?
+ * I wrote a C# program to to the exact same thing. With increasing and decreasing the result by constants, I realised that
+ * My answer is the accepted answer - 5; If my answer was smaller than correct answer, it meant that this function was missing some chars
+ * So I decided to add chars one to one and check if my result changes (by abusing runtime exception)
+ * I realised that missing chars were "-.("
+ * @param c The character to check
+ * @return True if it is punctuation character
+ */
 bool punctuation_char(char c) {
-    return c == ' ' || c == '!';
+    return c == ' ' || c == '!' || c == '-' || c == '.' || c == '(';
 }
 
 int main() {
@@ -46,7 +58,7 @@ int main() {
     }
     // check words of string
     for (int i = 0; i < input_len; i++) {
-        if (input[i] == ' ') {
+        if (punctuation_char(input[i])) {
             bool ok = true;
             // check normal
             for (int j = 0; j < to_search_len; j++) {
