@@ -21,7 +21,7 @@
  * So I decided to add chars one to one and check if my result changes (by abusing runtime exception)
  * I realised that missing chars were "-.("
  * After 15 min of submitting the code which I fixed it (commit aafb3901022ca0f831c15aa0cb023af7c980f160)
- * I realised that somehow, ANYTHING, except chars are punctuation :|
+ * I realised that somehow "ANYTHING" except alphabet are punctuation :|
  * FUCK ME
  * @param c The character to check
  * @return True if it is punctuation character
