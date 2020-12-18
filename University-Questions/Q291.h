@@ -9,22 +9,15 @@
 #include <stdio.h>
 #include <string.h>
 
-bool contains_substring(const char* init, const char* to_check, const char* reversed_to_check){
-    int substring_len = strlen(to_check);
-    for (int index = 0; index < strlen(init) - substring_len; index++) {
-        bool found = true;
-        for (int sub_index = 0; sub_index < substring_len; sub_index++) {
-            if (init[index + sub_index] != to_check[sub_index]) {
-                if (init[index + sub_index] != reversed_to_check[sub_index]) {
-                    found = false;
-                    break;
-                }
-            }
-        }
-        if(found)
-            return true;
-    }
-    return false;
+/**
+ * Checks if a string contains a substring or reverse of it
+ * @param init The string to search in
+ * @param to_check The string to check
+ * @param reversed_to_check The reversed string to check
+ * @return True if contains at least one of them
+ */
+bool contains_substring(const char *init, const char *to_check, const char *reversed_to_check) {
+    return strstr(init, to_check) != NULL || strstr(init, reversed_to_check) != NULL; // I didn't know C had these :|
 }
 
 int main() {
@@ -34,13 +27,13 @@ int main() {
     // read the input
     for (int i = 0; i < n; i++)
         scanf("%s", input[i]);
-    // Now check the substrings
+    // now check the substrings
     int first_len = strlen(input[0]), best_length = 0;
     char best[MAX_STRING_LENGTH];
     for (int i = 0; i < first_len; i++) {
         for (int j = i + 1; j <= first_len; j++) {
             int substring_len = j - i;
-            if (substring_len < best_length)
+            if (substring_len <= best_length) // choose first substring
                 continue;
             // create the substring
             char substring[substring_len + 1], substring_reversed[substring_len + 1];
@@ -53,13 +46,13 @@ int main() {
             // check each string
             bool ok = true;
             for (int string_number = 1; string_number < n; string_number++) {
-                if(!contains_substring(input[string_number], substring, substring_reversed)){
+                if (!contains_substring(input[string_number], substring, substring_reversed)) {
                     ok = false;
                     break;
                 }
             }
             // set the substring
-            if(ok){
+            if (ok) {
                 strcpy(best, substring);
                 best_length = substring_len;
             }
