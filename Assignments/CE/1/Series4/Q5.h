@@ -64,16 +64,11 @@ int stack(int before) {
                 } else {
                     /**
                      * If the number is still smaller than top of stack, we have to pop the stack and more
-                     * Returning here kinda means popping it
+                     * Returning here means same as popping the stack
                      */
                     return read_number;
                 }
             }
-            /**
-             * Continue the outer loop and do not pop anything from stack
-             * This statement is only reached when read_number == before
-             */
-            continue;
         }
         /**
          * The number is equal to top value in stack; Just print it, and don't add anything to stack
@@ -82,8 +77,13 @@ int stack(int before) {
         else if (before == read_number) {
             printf("%d\n", before);
             continue;
+        }else {
+            /**
+             * If we reach here, it means that top of stack (before) is bigger than read_number
+             * We have to pop the stack (go back in recursion) to find a 'before' which is less or equal to read_number
+             */
+            return read_number;
         }
-        return read_number;
     }
 }
 
