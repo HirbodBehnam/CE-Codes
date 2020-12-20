@@ -18,18 +18,18 @@
  * So how to convert this to a recursive function?
  * I tried to explain exactly in the function itself.
  * At very first add -1 to stack. Because all of the inputs are positive, so thus -1 is bigger than all of them
- * @param before The element at top of stack (same as stack.peek())
+ * @param top The element at top of stack (same as stack.peek())
  * @return If the return value is 0, it means that all of the recursion calls must be canceled. If the return value is non zero it means that we should
  * cancel recursions until we reach a recursion that the 'before' is less than or equal to returned value
  */
-int stack(int before) {
+int stack(int top) {
     while (1) {
         int read_number;
         scanf("%d", &read_number); // read the number
         if (read_number == 0) // kill switch of the recursion
             return 0; // all of the upper recursion must also exit when zero is returned
-        if (before < read_number) { // the number is bigger than top of stack; Insert it into stack
-            printf("%d\n", before); // print the top of stack before inserting read_number
+        if (top < read_number) { // the number is bigger than top of stack; Insert it into stack
+            printf("%d\n", top); // print the top of stack before inserting read_number
             while (1) {
                 /**
                  * The recursion call below is just like inserting (pushing) an element into stack
@@ -43,8 +43,8 @@ int stack(int before) {
                  * No need to add this into stack; Just print the top of stack and get the next number
                  * Note that we have to continue to the very outer loop (just below the function definition)
                  */
-                if (read_number == before) {
-                    printf("%d\n", before);
+                if (read_number == top) {
+                    printf("%d\n", top);
                     /**
                      * break this loop because we don't want to add to stack;
                      * Please note that this is the only way this loop is going to be broken (all the other cases are return)
@@ -55,8 +55,8 @@ int stack(int before) {
                  * We have popped the stack until we have reached a point that top of stack is less than the read_number
                  * So the read_number MUST be added to stack. Also before that we have to print the top of stack
                  */
-                else if (read_number > before) {
-                    printf("%d\n", before);
+                else if (read_number > top) {
+                    printf("%d\n", top);
                     /**
                      * Continue the loop; Here it means that we are going to add read_number to top of stack again
                      * (because the recursive function gets called again)
@@ -74,9 +74,9 @@ int stack(int before) {
          * The number is equal to top value in stack; Just print it, and don't add anything to stack
          * Just print the number and get the next number
          */
-        else if (before == read_number) {
-            printf("%d\n", before);
-            continue;
+        else if (read_number == top) {
+            printf("%d\n", top);
+            // Continue that outer loop
         }else {
             /**
              * If we reach here, it means that top of stack (before) is bigger than read_number
