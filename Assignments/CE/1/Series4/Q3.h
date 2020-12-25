@@ -19,15 +19,16 @@ int listen(int elliot, int kidnapper, bool elliot_talking) {
     if (elliot >= kidnapper) // Elliot won
         return elliot + kidnapper;
     char word = getchar(); // read next word
-    if (word == 'b') // whatever the case is, b must add one to elliot
-        elliot++;
-    // check the end. For example aabaaaac must return 5. NO; Because elliot was talking and we heard a 'a'
+	// check the end. For example aabaaaac must return 5. NO; Because elliot was talking and we heard a 'a'
     if (elliot_talking && word != 'b') {
         if (elliot >= kidnapper) // Elliot won! Return positive number
             return elliot + kidnapper + 1; // + 1 is because we have already read a char
         // Kidnapper won! Return negative value
         return -(elliot + kidnapper + 1);
     }
+	 // whatever the case is, b must add one to elliot
+    if (word == 'b')
+        elliot++;
     // if elliot is not speaking
     if (word == 'a') // kidnapper is speaking
         kidnapper++;
