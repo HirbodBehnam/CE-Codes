@@ -17,10 +17,10 @@ int n;
  * @return The integral
  */
 float Integral(float a, float b) {
-    float interval_width = (b - a) / (float) n, area = 0;
+    double interval_width = (double)(b - a) / (double) n, area = 0, begin = a; // use double not float to get 100 not 80
     for (int i = 0; i < n; i++) { // calculate the area of rectangle
-        area += a * a * interval_width; // a * a is here to calculate the height of rectangle
-        a += interval_width; // move the start position of interval
+        area += begin * begin * interval_width; // a * a is here to calculate the height of rectangle
+        begin += interval_width; // move the start position of interval
     }
     return area;
 }
