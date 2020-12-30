@@ -147,3 +147,25 @@ long long ipow(long long base, int exp) {
 
     return result;
 }
+
+unsigned long long reverse_number(unsigned long long number) {
+    unsigned long long result = 0;
+    while (number != 0) {
+        result *= 10;
+        result += number % 10;
+        number /= 10;
+    }
+    return result;
+}
+
+unsigned long long count_factors(unsigned long long number) {
+    const unsigned long long to = (unsigned long long) sqrt((double) number);
+    unsigned long long count = 0;
+    for (unsigned long long i = 1; i <= to; i++)
+        if (a % i == 0)
+            count += 2;
+
+    if (to * to == a) // fix perfect square numbers
+        count--;
+    return count;
+}
