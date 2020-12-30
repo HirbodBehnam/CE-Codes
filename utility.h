@@ -169,3 +169,16 @@ unsigned long long count_factors(unsigned long long number) {
         count--;
     return count;
 }
+
+int perfect_number(unsigned long long number) {
+    const unsigned long long to = (unsigned long long) sqrt((double) number);
+    unsigned long long sum = 0;
+    for (unsigned long long i = 1; i <= to; i++)
+        if (number % i == 0)
+            sum += i + number / i;
+
+    if (to * to == number) // fix perfect square numbers
+        sum -= to;
+    sum -= number;
+    return number == sum;
+}
