@@ -11,10 +11,12 @@
  * Checks if a dimension is valid mine board
  * @param i
  * @param j
+ * @param max_x Max x in board
+ * @param max_y Max y in board
  * @return 1 if good; Otherwise 0
  */
-int valid_dimension(int i, int j, int mine_x, int mine_y) {
-    return (i >= 0 && i < mine_x) && (j >= 0 && j < mine_y);
+int valid_dimension(int i, int j, int max_x, int max_y) {
+    return (i >= 0 && i < max_x) && (j >= 0 && j < max_y);
 }
 
 int main() {
@@ -22,6 +24,9 @@ int main() {
     int m, n;
     scanf("%d %d", &m, &n);
     char board[m][n];
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            board[i][j] = 0; // initialize array
     int mines_count;
     scanf("%d", &mines_count);
     // read the mines
@@ -33,24 +38,12 @@ int main() {
     // fill the board
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-            if (board[i][j] != '*') { // get number of bombs around this tile
+            if (board[i][j] != MINE) { // get number of bombs around this tile
                 int sum = 0;
-                if (valid_dimension(i - 1, j - 1, m, n) && board[i - 1][j - 1] == MINE)
-                    sum++;
-                if (valid_dimension(i - 1, j, m, n) && board[i - 1][j] == MINE)
-                    sum++;
-                if (valid_dimension(i - 1, j + 1, m, n) && board[i - 1][j + 1] == MINE)
-                    sum++;
-                if (valid_dimension(i, j + 1, m, n) && board[i][j + 1] == MINE)
-                    sum++;
-                if (valid_dimension(i + 1, j + 1, m, n) && board[i + 1][j + 1] == MINE)
-                    sum++;
-                if (valid_dimension(i + 1, j, m, n) && board[i + 1][j] == MINE)
-                    sum++;
-                if (valid_dimension(i + 1, j - 1, m, n) && board[i + 1][j - 1] == MINE)
-                    sum++;
-                if (valid_dimension(i, j - 1, m, n) && board[i][j - 1] == MINE)
-                    sum++;
+                for (int x = i - 1; x <= i + 1; x++)
+                    for (int y = j - 1; y <= j + 1; y++)
+                        if (valid_dimension(x, y, m, n) && board[x][y] == MINE)
+                            sum++;
                 printf("%d ", sum);
             } else { // print the bomb
                 printf("* ");
