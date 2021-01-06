@@ -14,11 +14,11 @@
  * @param dir Direction of shift
  * @return
  */
-unsigned long int circular_shift(unsigned long int n, char bytes, char bits, char dir) {
+unsigned int circular_shift(unsigned int n, char bytes, char bits, char dir) {
     bits %= bytes * 8; // make the bits smaller than total bits that we want to shift
     if (bytes == 4) { // just normal shift
         if (dir == 'R') {
-            return (n >> bits) | (n << (32 - bits)); // somehow this part of code is wrong?
+            return (n >> bits) | (n << (32 - bits));
         } else {
             return (n << bits) | (n >> (32 - bits));
         }
@@ -32,7 +32,6 @@ unsigned long int circular_shift(unsigned long int n, char bytes, char bits, cha
         }
         n &= 4294901760; // 11111111111111110000000000000000: Turn off the first 16 bits
         n |= small; // turn on the bits that is needed
-        return n;
     } else {
         // bytes == 1
         unsigned char small = n;  // this is here to get the first byte of number
@@ -43,15 +42,15 @@ unsigned long int circular_shift(unsigned long int n, char bytes, char bits, cha
         }
         n &= 4294967040; // 11111111111111111111111100000000: Turn off the first 8 bits
         n |= small; // turn on the bits that is needed
-        return n;
     }
+    return n;
 }
 
 int main() {
-    unsigned long int n;
+    unsigned int n;
     int bytes, bit;
     char dir;
-    scanf("%lu\n%d\n%d\n%c", &n, &bytes, &bit, &dir);
-    printf("%u", circular_shift(n, bytes, bit, dir)); // we should print this as unsigned 32 bit number
+    scanf("%u\n%d\n%d\n%c", &n, &bytes, &bit, &dir);
+    printf("%u", circular_shift(n, (char) bytes, (char) bit, dir)); // we should print this as unsigned 32 bit number
     return 0;
 }
