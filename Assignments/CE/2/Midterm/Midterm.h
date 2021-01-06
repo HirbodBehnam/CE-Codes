@@ -35,7 +35,7 @@ unsigned long int circular_shift(unsigned long int n, char bytes, char bits, cha
         return n;
     } else {
         // bytes == 1
-        unsigned char small = n;  // this is here to get the first 2 bytes of number
+        unsigned char small = n;  // this is here to get the first byte of number
         if (dir == 'R') {
             small = (small >> bits) | (small << (8 - bits)); // char is 8 bits
         } else {
