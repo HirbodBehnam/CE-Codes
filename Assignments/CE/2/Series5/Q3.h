@@ -3,7 +3,7 @@
 
 #endif //QUERA_Q3_H
 
-#define MAX_NAME_SIZE 1000 // wtf?
+#define MAX_NAME_SIZE 1000
 #define CHEAT (-1)
 
 #include <stdio.h>
@@ -38,7 +38,9 @@ int main() {
             names[i][index] = c;
             index++;
         }
-        names[i][index] = '\0'; // null terminator
+        while (names[i][index - 1] == ' ') // remove whitespace from end of string (trim)
+            index--;
+        names[i][index] = '\0';
         // check if the user has cheated
         for (int j = 0; j < i; j++) { // check all users before
             if (strcmp(names[i], names[j]) == 0) {
