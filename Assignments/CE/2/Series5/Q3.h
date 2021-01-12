@@ -20,8 +20,14 @@ int main() {
     /**
      * Numbers contains the number that each participant has given
      * -1 means that that the user has cheated
+     * So why n + 1 and then setting number[n] to -1?
+     * At the for loop that we search for answer, we increase 'i' while it is less than 'n'
+     * A problem occurs when we try to check 'i + 1' when i = n - 1
+     * So we make the array one element bigger, and then we set the last element to -2 so it is not a repeated number in any way
+     * Also note that the bubble sort is one on first n elements not first n + 1 elements
      */
-    int numbers[n];
+    int numbers[n + 1];
+    numbers[n] = -2;
     // read all participants
     for (int i = 0; i < n; i++) {
         // read the input
