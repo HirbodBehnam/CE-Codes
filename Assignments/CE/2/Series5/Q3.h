@@ -38,9 +38,7 @@ int main() {
             names[i][index] = c;
             index++;
         }
-        while (names[i][index - 1] == ' ') // remove whitespace from end of string (trim)
-            index--;
-        names[i][index] = '\0';
+        names[i][index] = '\0'; // null terminator
         // check if the user has cheated
         for (int j = 0; j < i; j++) { // check all users before
             if (strcmp(names[i], names[j]) == 0) {

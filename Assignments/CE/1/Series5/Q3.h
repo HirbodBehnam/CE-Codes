@@ -27,19 +27,18 @@ bool valid_position(const int x, const int y) {
  * @param x Current x position
  * @param y Current y position
  */
-void backtrack(int playground[n][m], bool checked[n][m], const int x, const int y) {
+void backtrack(int playground[n][m], const int x, const int y) {
     // check position
     if (!valid_position(x, y))
         return;
     // check this tile's color
-    if (playground[x][y] != to_change_color || checked[x][y])
+    if (playground[x][y] != to_change_color)
         return;
     playground[x][y] = color;
-    checked[x][y] = true;
     // try other tiles
     for (int i = -1; i <= 1; i++)
         for (int j = -1; j <= 1; j++)
-            backtrack(playground, checked, x + i, y + j);
+            backtrack(playground, x + i, y + j);
 }
 
 int main() {
@@ -47,17 +46,16 @@ int main() {
     int first_x, first_y;
     scanf("%d %d %d", &first_x, &first_y, &color);
     int playground[n][m];
-    bool checked[n][m];
     // read the playground
     for (int i = 0; i < n; i++)
-        for (int j = 0; j < m; j++) {
+        for (int j = 0; j < m; j++)
             scanf("%d", &playground[i][j]);
-            checked[i][j] = false;
-        }
+
     // get the color
     to_change_color = playground[first_x - 1][first_y - 1];
     // change the colors
-    backtrack(playground, checked, first_x - 1, first_y - 1);
+    if(to_change_color != color)
+        backtrack(playground, first_x - 1, first_y - 1);
     // print
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++)
