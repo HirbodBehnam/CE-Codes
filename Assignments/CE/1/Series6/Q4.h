@@ -32,10 +32,11 @@ int n, m, l;
  * Reads from stdin until it reaches a newline char
  */
 void read_until_newline() {
-    while (getchar() != '\n');
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
 
-int run() {
+int main() {
     scanf("%d %d %d", &n, &m, &l);
     read_until_newline();
     l++;
@@ -71,7 +72,7 @@ int run() {
             } else {
                 char max = 0;
                 for (int i = 1; i < l; i++) {
-                    char read = tolower(getchar());
+                    char read = getchar();
                     getchar();
                     (d + INDEX_3D(counter_n, counter_m, i))->type = TYPE_CHAR;
                     (d + INDEX_3D(counter_n, counter_m, i))->value.c = read;
@@ -90,7 +91,7 @@ int run() {
         for (int counter_m = 0; counter_m < m; counter_m++) {
             switch ((result + INDEX_2D(counter_n, counter_m))->type) {
                 case TYPE_CHAR:
-                    printf("%c ", (result + INDEX_2D(counter_n, counter_m))->value.c);
+                    printf("%c ", tolower((result + INDEX_2D(counter_n, counter_m))->value.c));
                     break;
                 case TYPE_INT:
                     printf("%d ", (result + INDEX_2D(counter_n, counter_m))->value.i);

@@ -1,7 +1,7 @@
-#ifndef QUERA_Q3_H
-#define QUERA_Q3_H
+#ifndef QUERA_Q10640_H
+#define QUERA_Q10640_H
 
-#endif //QUERA_Q3_H
+#endif //QUERA_Q10640_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -65,23 +65,13 @@ void print_rhombus(char *array, const unsigned int diameter, const unsigned int 
      * I found the width by just looking at the examples and trying to find a pattern
      * Depth must be decreased by one because we have done one recursion
      * What about X?
-     * After looking at some big examples from my friend's code, I stated seeing a pattern in the x of the squares
-     * If n was 4, the x for squares was {0,4} -> 4 = 4
-     * If n was 5, the x for squares was {0,4,6} -> 6 = 4 + 2
-     * If n was 6, the x for squares was {0,8,12} -> 12 = 8 + 4
-     * If n was 7, the x for squares was {0,8,12,14} -> 14 = 8 + 4 + 2
-     * I wanted to somehow connect the number of each set to how many recursions are left (AKA depth)
-     * Obviously, there should have been a depth/2 somewhere in the formula. I also had the last x from the last recursion
-     * So the only thing I had to do was to calculate how much I should add to it
-     * The formula I came with was
-     * x + 2 ^ ceiling(depth / 2)
-     * Which is correct. Note that the x the formula is the x of the last square not the rhombus. This means that
-     * when calling print_square, I should use x - 1 instead of x
-     * I also didn't want to use ceiling function or such stuff; ceiling(depth / 2) can be simply written as
-     * floor(depth / 2 + 0.5) which is (depth + 1) / 2 (integer division)
-     * The bitshift is also used to fastly compute 2 ^ n
+     * This is the only part that is different from that CS problem
+     * It was obvious that x - 1 must exist so that change the position relative to last x
+     * For the other part, I found ceiling(diameter + 2) / 2 / 2
+     * I basically, guessed this formula mostly because I thought: I can use diameter as well instead of depth
+     * With that formula, we can simplify that to (diameter + 3) / 4 to get rid of ceiling
      */
-    print_square(array, diameter / 2 + 1, x - 1 + (1U << ((depth + 1) / 2)), depth - 1);
+    print_square(array, diameter / 2 + 1, x - 1 + (diameter + 3) / 4, depth - 1);
 }
 
 // Explained it at top
@@ -108,7 +98,7 @@ void print_square(char *array, const unsigned int width, const unsigned int x, c
 int main() {
     unsigned int n;
     scanf("%u", &n); // read the number of iterations
-    final_width = (1U << (n / 2 + 2)) - 1; // get the width
+    final_width = (1U << (n + 1)) - 1; // get the width
     char *result = malloc(final_width * final_width * sizeof(char)); // create an array to print it at last
     memset(result, '.', final_width * final_width * sizeof(char)); // fill the result with '.'
     // use recursion to fill the result
