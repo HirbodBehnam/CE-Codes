@@ -12,7 +12,7 @@
 #define TYPE_CHAR 1
 #define TYPE_INT 2
 
-#define MAX_LINE 1000
+#define MAX_LINE 250
 
 /**
  * This union can contain all of the data types needed to be stored
@@ -64,9 +64,8 @@ int main() {
     data *result = malloc(n * m * sizeof(data));
     for (int counter_n = 0; counter_n < n; counter_n++) {
         for (int counter_m = 0; counter_m < m; counter_m++) {
-            char line[MAX_LINE];
-            fgets(line, sizeof(line), stdin); // use fget to get all of the line
-            char c = line[0]; // read the bool
+            char c = getchar(); // read the bool from first char
+            read_until_newline();
             // save in result matrix
             {
                 data front;
@@ -91,16 +90,18 @@ int main() {
                 (result + INDEX_2D(counter_n, counter_m))->value.i = max_so_far;
                 read_until_newline();
             } else if (c == 'F') {
-                fgets(line, sizeof(line), stdin); // use fgets; Apparently, using getchar fucks up everything
+                char *line = malloc(MAX_LINE * sizeof(char));
+                fgets(line, MAX_LINE * sizeof(line), stdin); // use fgets; Apparently, using getchar fucks up everything
                 char max = 0; // the largest char
                 for (int i = 1; i < l; i++) {
-                    char read = line[2 * i - 2]; // chars in index of 0, 2, 4 ...
+                    char read = *(line + 2 * i - 2); // chars in index of 0, 2, 4 ...
                     (d + INDEX_3D(counter_n, counter_m, i))->type = TYPE_CHAR;
                     (d + INDEX_3D(counter_n, counter_m, i))->value.c = read;
                     // check max
                     if (read > max)
                         max = read;
                 }
+                free(line);
                 // update result array
                 (result + INDEX_2D(counter_n, counter_m))->type = TYPE_CHAR;
                 (result + INDEX_2D(counter_n, counter_m))->value.c = max;
