@@ -12,27 +12,47 @@
 #define TYPE_CHAR 1
 #define TYPE_INT 2
 
+#define MAX_LINE 1000
+
+/**
+ * This union can contain all of the data types needed to be stored
+ */
 typedef union e {
     int i;
     char c;
     bool b;
 } entry;
 
+/**
+ * A variable data type that can be either int, char or bool
+ */
 typedef struct d {
+    /**
+     * The value
+     */
     entry value;
+    /**
+     * The value type from TYPE_BOOL or TYPE_CHAR or TYPE_INT
+     */
     char type;
 } data;
 
 int n, m, l;
 
+/**
+ * Macro to get the element in 3d array (used for input matrix)
+ */
 #define INDEX_3D(x, y, z) (((x)*m*l)+((y)*l)+(z))
+/**
+ * Macro to get element in 2d array (used for final matrix)
+ */
 #define INDEX_2D(x, y) (((x)*m)+(y))
 
 /**
  * Reads from stdin until it reaches a newline char
  */
 void read_until_newline() {
-    char c;
+    int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
@@ -44,9 +64,10 @@ int main() {
     data *result = malloc(n * m * sizeof(data));
     for (int counter_n = 0; counter_n < n; counter_n++) {
         for (int counter_m = 0; counter_m < m; counter_m++) {
-            char c = getchar();
-            read_until_newline();
-            // save to matrix
+            char line[MAX_LINE];
+            fgets(line, sizeof(line), stdin); // use fget to get all of the line
+            char c = line[0]; // read the bool
+            // save in result matrix
             {
                 data front;
                 front.type = TYPE_BOOL;
@@ -54,7 +75,7 @@ int main() {
                 *(d + INDEX_3D(counter_n, counter_m, 0)) = front;
             }
             if (c == 'T') {
-                int max_so_far = -2147483648, max_ending_here = 0;
+                int max_so_far = 0, max_ending_here = 0;
                 for (int i = 1; i < l; i++) {
                     (d + INDEX_3D(counter_n, counter_m, i))->type = TYPE_INT;
                     scanf("%d", &(d + INDEX_3D(counter_n, counter_m, i))->value.i);
@@ -67,16 +88,16 @@ int main() {
                         max_ending_here = 0;
                 }
                 (result + INDEX_2D(counter_n, counter_m))->type = TYPE_INT;
-                (result + INDEX_2D(counter_n, counter_m))->value.i = max_so_far < 0 ? 0 : max_so_far;
+                (result + INDEX_2D(counter_n, counter_m))->value.i = max_so_far;
                 read_until_newline();
-            } else {
-                char max = 0;
+            } else if (c == 'F') {
+                fgets(line, sizeof(line), stdin); // use fgets; Apparently, using getchar fucks up everything
+                char max = 0; // the largest char
                 for (int i = 1; i < l; i++) {
-                    char read = getchar();
-                    getchar();
+                    char read = line[2 * i - 2]; // chars in index of 0, 2, 4 ...
                     (d + INDEX_3D(counter_n, counter_m, i))->type = TYPE_CHAR;
                     (d + INDEX_3D(counter_n, counter_m, i))->value.c = read;
-                    // check min
+                    // check max
                     if (read > max)
                         max = read;
                 }
