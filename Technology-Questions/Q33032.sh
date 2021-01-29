@@ -4,7 +4,7 @@ mkdir -p "$dst"
 # Get all files
 for filename in "$src"/*; do
 	while read -r line; do
-		episode_str=$(echo "$line" | grep -o -E ' [Ss][0-9]+[Ee][0-9]+ ')
+		episode_str=$(echo "$line" | awk -F$'\t' '{print $1}' | grep -o -E ' [Ss][0-9]*[1-9][0-9]*[Ee][0-9]*[1-9][0-9]* ')
 		if [ -n "$episode_str" ]; then # check if anything exists at first
 			# Get the chapter and episode
 			episode_str=$(echo "$episode_str" | grep -o -E '[0-9]+' | sed 's/^0*//')
@@ -27,9 +27,9 @@ for filename in "$dst"/*/*.tmp; do
 		SEED_LEACH+=($((torrent[3] * 2 + torrent[4]))) # 2 * seed + leach
 		IFS=' ' read -r -a s <<<"${torrent[2],,}"      # split with space character
 		if [[ "${s[1]}" == "mb" ]]; then
-			SIZE+=("${s[0]}")
+			SIZE+=("$(echo "${s[0]}" | awk '{print int($1)}')")
 		else
-			SIZE+=("$(echo "${s[0]}" | awk '{print $1 * 1000}')")
+			SIZE+=("$(echo "${s[0]}" | awk '{print int($1 * 1000)}')")
 		fi
 	done <"$filename"
 	# Sort them (reverse bubble sort)
@@ -49,7 +49,7 @@ for filename in "$dst"/*/*.tmp; do
 				temp=${SIZE[j]}
 				SIZE[$j]=${SIZE[$((j + 1))]}
 				SIZE[$((j + 1))]=$temp
-			elif [[ "${SEED_LEACH[j]}" -eq "${SEED_LEACH[$((j + 1))]}" ]]; then # if they are equal we should check other stuff
+			elif [[ "${SEED_LEACH[j]}" == "${SEED_LEACH[$((j + 1))]}" ]]; then # if they are equal we should check other stuff
 				if [[ "${SIZE[j]}" -gt "${SIZE[$((j + 1))]}" ]]; then # check sizes. Smaller values first
 					# Sort name
 					temp=${NAME[j]}
@@ -63,7 +63,7 @@ for filename in "$dst"/*/*.tmp; do
 					temp=${SIZE[j]}
 					SIZE[$j]=${SIZE[$((j + 1))]}
 					SIZE[$((j + 1))]=$temp
-				elif [[ "${SIZE[j]}" -eq "${SIZE[$((j + 1))]}" ]]; then
+				elif [[ "${SIZE[j]}" == "${SIZE[$((j + 1))]}" ]]; then
 					if [[ "${NAME[j]}" > "${NAME[$((j + 1))]}" ]]; then # compare strings. smaller values first
 						# Sort name
 						temp=${NAME[j]}
