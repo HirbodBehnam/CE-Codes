@@ -25,7 +25,7 @@ for filename in "$dst"/*/*.tmp; do
 		IFS=$'\t' read -r -a torrent <<<"$line" # split with tab character
 		NAME+=("${torrent[0]}")
 		SEED_LEACH+=($((torrent[3] * 2 + torrent[4]))) # 2 * seed + leach
-		IFS=' ' read -r -a s <<<"${torrent[2],,}"      # split with tab character
+		IFS=' ' read -r -a s <<<"${torrent[2],,}"      # split with space character
 		if [[ "${s[1]}" == "mb" ]]; then
 			SIZE+=("${s[0]}")
 		else
@@ -65,7 +65,6 @@ for filename in "$dst"/*/*.tmp; do
 					SIZE[$((j + 1))]=$temp
 				elif [[ "${SIZE[j]}" -eq "${SIZE[$((j + 1))]}" ]]; then
 					if [[ "${NAME[j]}" > "${NAME[$((j + 1))]}" ]]; then # compare strings. smaller values first
-						echo "${NAME[j]} > ${NAME[$((j + 1))]}"
 						# Sort name
 						temp=${NAME[j]}
 						NAME[$j]=${NAME[$((j + 1))]}
