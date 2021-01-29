@@ -12,8 +12,6 @@
 #define TYPE_CHAR 1
 #define TYPE_INT 2
 
-#define MAX_LINE 250
-
 /**
  * This union can contain all of the data types needed to be stored
  */
@@ -52,7 +50,7 @@ int n, m, l;
  * Reads from stdin until it reaches a newline char
  */
 void read_until_newline() {
-    int c;
+    char c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
@@ -90,21 +88,23 @@ int main() {
                 (result + INDEX_2D(counter_n, counter_m))->value.i = max_so_far;
                 read_until_newline();
             } else if (c == 'F') {
-                char *line = malloc(MAX_LINE * sizeof(char));
-                fgets(line, MAX_LINE * sizeof(line), stdin); // use fgets; Apparently, using getchar fucks up everything
                 char max = 0; // the largest char
+                char last; // last char read
                 for (int i = 1; i < l; i++) {
-                    char read = *(line + 2 * i - 2); // chars in index of 0, 2, 4 ...
+                    char read = getchar(); // chars in index of 0, 2, 4 ...
+                    last = getchar();
                     (d + INDEX_3D(counter_n, counter_m, i))->type = TYPE_CHAR;
                     (d + INDEX_3D(counter_n, counter_m, i))->value.c = read;
                     // check max
                     if (read > max)
                         max = read;
                 }
-                free(line);
                 // update result array
                 (result + INDEX_2D(counter_n, counter_m))->type = TYPE_CHAR;
                 (result + INDEX_2D(counter_n, counter_m))->value.c = max;
+                // read until end if needed; on tests 1 ~ 100, the last char is a whitespace and then there is a new line
+                if (last != '\n' && last != EOF)
+                    read_until_newline();
             }
         }
     }
