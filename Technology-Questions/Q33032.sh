@@ -9,9 +9,11 @@ for filename in "$src"/*; do
 			# Get the chapter and episode
 			episode_str=$(echo "$episode_str" | grep -o -E '[0-9]+' | sed 's/^0*//')
 			readarray -t ary <<<"$episode_str"
-			# Create the chapter folder
-			mkdir -p "$dst/${ary[0]}"
-			echo "$line" >>"$dst/${ary[0]}/${ary[1]}.tmp" # write the whole line to file; For now...
+			if [ "${#ary[@]}" == "2" ]; then
+				# Create the chapter folder
+				mkdir -p "$dst/${ary[0]}"
+				echo "$line" >>"$dst/${ary[0]}/${ary[1]}.tmp" # write the whole line to file; For now...
+			fi
 		fi
 	done <"$filename"
 done
@@ -25,8 +27,8 @@ for filename in "$dst"/*/*.tmp; do
 		IFS=$'\t' read -r -a torrent <<<"$line" # split with tab character
 		NAME+=("${torrent[0]}")
 		SEED_LEACH+=($((torrent[3] * 2 + torrent[4]))) # 2 * seed + leach
-		IFS=' ' read -r -a s <<<"${torrent[2],,}"      # split with space character
-		if [[ "${s[1]}" == "mb" ]]; then
+		IFS=' ' read -r -a s <<<"${torrent[2]}"        # split with space character
+		if [[ "${s[1]}" == "MB" ]]; then
 			SIZE+=("$(echo "${s[0]}" | awk '{print int($1)}')")
 		else
 			SIZE+=("$(echo "${s[0]}" | awk '{print int($1 * 1000)}')")
