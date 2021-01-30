@@ -4,16 +4,16 @@ mkdir -p "$dst"
 # Get all files
 for filename in "$src"/*; do
 	while read -r line; do
-		episode_str=$(echo "$line" | awk -F$'\t' '{print $1}' | grep -o -E ' [Ss][0-9]*[1-9][0-9]*[Ee][0-9]*[1-9][0-9]* ')
+		episode_str=$(echo "$line" | awk -F$'\t' '{print $1}' | grep -o -E '(^|[^a-zA-Z_0-9])[Ss][0-9]+[Ee][0-9]+($|[^a-zA-Z_0-9])')
 		if [ -n "$episode_str" ]; then # check if anything exists at first
 			# Get the chapter and episode
-			episode_str=$(echo "$episode_str" | grep -o -E '[0-9]+' | sed 's/^0*//')
+			episode_str=$(echo "$episode_str" | grep -o -E '[0-9]+' | awk 'BEGIN{RS=","}{print int($1); print int($2)}')
+			# The point of awk is to remove leading zeroes from last of the number, but convert numbers like 0000 to 0
+			# Using sed or perl, makes these numbers output ""
 			readarray -t ary <<<"$episode_str"
-			if [ "${#ary[@]}" == "2" ]; then
-				# Create the chapter folder
-				mkdir -p "$dst/${ary[0]}"
-				echo "$line" >>"$dst/${ary[0]}/${ary[1]}.tmp" # write the whole line to file; For now...
-			fi
+			# Create the chapter folder
+			mkdir -p "$dst/${ary[0]}"
+			echo "$line" >>"$dst/${ary[0]}/${ary[1]}.tmp" # write the whole line to file; For now...
 		fi
 	done <"$filename"
 done
