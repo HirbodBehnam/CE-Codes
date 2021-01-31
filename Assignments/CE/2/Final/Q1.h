@@ -8,6 +8,13 @@
 #include <stdio.h>
 #include <string.h>
 
+int copy_and_invert(const char *, const char *);
+
+int main(){
+    copy_and_invert("D:\\1.txt", "D:\\2.txt");
+    return 0;
+}
+
 /**
  * A function to copy a file from src to dst while replacing all uppercase characters with lowercase, lowercase with uppercase
  * and do not touching anything else.
@@ -24,7 +31,8 @@ int copy_and_invert(const char *src, const char *dst) {
         return 1;
     }
     FILE *destination = fopen(dst, "w"); // write to this file; Overwrite the data
-    if (source == NULL) {
+    if (destination == NULL) {
+        fclose(source); // source is open here
         printf("Cannot open the destination file: %d\n%s\n", errno, strerror(errno));
         return 1;
     }
