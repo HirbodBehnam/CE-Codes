@@ -93,7 +93,7 @@ UserFound find_user(const char *username, const Table *table) {
     }
     // check other ppl
     for (int i = 1; i < table->number_of_levels; i++)
-        for (int j = 0; j < i * i; j++)
+        for (int j = 0; j < table->levels[i].number_of_users; j++)
             if (strcmp(table->levels[i].users[j]->username, username) == 0) {
                 user.user = table->levels[i].users[j];
                 user.level = i;
@@ -245,7 +245,7 @@ int main() {
             User *user = create_user(newName, money * 15 / 100, NULL);
             // add the user to last
             int level = table.number_of_levels - 1;
-            if (level * level == table.levels[level].number_of_users) { // add a new level
+            if (level * level == table.levels[level].number_of_users || level == 0) { // add a new level
                 level++;
                 table.number_of_levels++;
                 table.levels = realloc(table.levels, table.number_of_levels * sizeof(Level));
@@ -259,7 +259,7 @@ int main() {
                 table.levels[level].users[table.levels[level].number_of_users - 1] = user;
             }
             // add money to upper tables
-            money = 2;
+            money /= 2;
             money /= level; // now money is the total money for each level
             for (int i = 0; i < level; i++) {
                 const int users_count = table.levels[i].number_of_users;
@@ -278,7 +278,7 @@ int main() {
         if (begins_with(command, "Number_of_users_in_level")) {
             int level;
             sscanf(command, "%*s %d", &level);
-            if (level > table.number_of_levels)
+            if (level >= table.number_of_levels)
                 puts("No_such_level_found");
             else
                 printf("%d\n", table.levels[level].number_of_users);
