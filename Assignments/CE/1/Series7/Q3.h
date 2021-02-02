@@ -148,8 +148,6 @@ int main() {
             }
             // find inter
             UserFound introducer = find_user(fromName, &table);
-            if (introducer.user == NULL)
-                continue; // TODO: error message?
             introducer.user->referrers++;
             // add money to people
             table.levels[0].users[0]->balance += money / 10; // table creator: 10%
@@ -193,7 +191,7 @@ int main() {
                     // check if everything is equal
                     bool reffs_are_equal = true;
                     User *option = table.levels[level].users[0];
-                    int index;
+                    int index = 0;
                     for (int i = 0; i < table.levels[level].number_of_users; i++) {
                         if (table.levels[level].users[i]->referrers != option->referrers)
                             reffs_are_equal = false;
