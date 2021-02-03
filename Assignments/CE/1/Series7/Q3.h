@@ -209,9 +209,15 @@ int main() {
                                 index = i;
                             }
                     }
-                    // swap places
-                    table.levels[level].users[index] = introducer.user;
-                    table.levels[level + 1].users[introducer.index] = option;
+                    // swap places; move each user to last of level
+                    memmove(table.levels[level].users + index,
+                            table.levels[level].users + index + 1,
+                            (table.levels[level].number_of_users - index + 1) * sizeof(User *));
+                    memmove(table.levels[level + 1].users + introducer.index,
+                            table.levels[level + 1].users + introducer.index + 1,
+                            (table.levels[level + 1].number_of_users - introducer.index + 1) * sizeof(User *));
+                    table.levels[level].users[table.levels[level].number_of_users - 1] = introducer.user;
+                    table.levels[level + 1].users[table.levels[level + 1].number_of_users - 1] = option;
                 } else { // we have space
                     // add this user to upper level
                     table.levels[level].number_of_users++;
