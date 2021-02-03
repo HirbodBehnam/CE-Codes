@@ -50,6 +50,8 @@ typedef struct t {
     Level *levels;
 } Table;
 
+#define POSITIVE_MOD(x, m) (((x) % (m) + (m)) % (m))
+
 /**
  * Checks if a string begins with another string
  * @param str The string to check if it begins
@@ -116,7 +118,7 @@ int main() {
         if (begins_with(command, "En")) // end
             return 0;
         if (begins_with(command, "Create_a_table_for")) {
-            if (table.levels == NULL) { // check the balance
+            if (table.levels == NULL) { // check the founder
                 int init_money;
                 char username[MAX_NAME];
                 sscanf(command, "%*s %s %*s %d", username, &init_money);
@@ -241,21 +243,13 @@ int main() {
             benjamin_money += money / 4; // benjamin: 25%
             // create user
             User *user = create_user(newName, money * 15 / 100, NULL);
-            // add the user to last
-            int level = table.number_of_levels - 1;
-            if (level * level == table.levels[level].number_of_users || level == 0) { // add a new level
-                level++;
-                table.number_of_levels++;
-                table.levels = realloc(table.levels, table.number_of_levels * sizeof(Level));
-                table.levels[table.number_of_levels - 1].number_of_users = 1;
-                table.levels[table.number_of_levels - 1].users = malloc(1 * sizeof(User *));
-                table.levels[table.number_of_levels - 1].users[0] = user;
-            } else { // add to current level
-                table.levels[level].number_of_users++;
-                table.levels[level].users = realloc(table.levels[level].users,
-                                                    table.levels[level].number_of_users * sizeof(User *));
-                table.levels[level].users[table.levels[level].number_of_users - 1] = user;
-            }
+            // add the user to a new level
+            int level = table.number_of_levels;
+            table.number_of_levels++;
+            table.levels = realloc(table.levels, table.number_of_levels * sizeof(Level));
+            table.levels[table.number_of_levels - 1].number_of_users = 1;
+            table.levels[table.number_of_levels - 1].users = malloc(1 * sizeof(User *));
+            table.levels[table.number_of_levels - 1].users[0] = user;
             // add money to upper tables
             money /= 2;
             money /= level; // now money is the total money for each level
@@ -308,15 +302,11 @@ int main() {
                 Level level = table.levels[user.level];
                 if (level.number_of_users == 1)
                     puts("No_friend");
-                else if (user.index == 0)
-                    puts(level.users[user.index + 1]->username);
-                else if (user.index == level.number_of_users - 1)
-                    puts(level.users[user.index - 1]->username);
-                else {
-                    // left user first
-                    puts(level.users[user.index - 1]->username);
-                    puts(level.users[user.index + 1]->username);
-                }
+                else if (level.number_of_users == 2)
+                    puts(level.users[POSITIVE_MOD(user.index - 1, level.number_of_users)]->username);
+                else
+                    printf("%s %s\n", level.users[POSITIVE_MOD(user.index - 1, level.number_of_users)]->username,
+                           level.users[POSITIVE_MOD(user.index + 1, level.number_of_users)]->username);
             }
             continue;
         }
