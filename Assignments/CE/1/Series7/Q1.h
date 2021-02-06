@@ -4,17 +4,16 @@
 #endif //QUERA_Q1_H
 
 #define MAX 1000
-#define MASTER_LENGTH (7 + 10 + 28 + 28 + 1)
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char *master;
+const char *master = "_-!@()%0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 int index_in_master(char c) {
-    for (int i = 0; i < MASTER_LENGTH; i++)
+    for (int i = 0; i < strlen(master); i++)
         if (master[i] == c)
             return i;
     return -1;
@@ -65,12 +64,6 @@ int main() {
             tmp[strlen(tmp) - 1] = 0; // remove \n
         strings[i] = tmp;
     }
-    // create master
-    master = malloc(MASTER_LENGTH * sizeof(char));
-    strcpy(master, "_-!@()%");
-    strcat(master, "0123456789");
-    strcat(master, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    strcat(master, "abcdefghijklmnopqrstuvwxyz");
     // sort
     qsort(strings, n, sizeof(char *), cmp);
     // print
